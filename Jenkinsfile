@@ -17,8 +17,8 @@ pipeline {
                         // Install Node.js dependencies and build your backend
                         sh 'docker build -t backendimage17 .'
                         sh 'docker images'
-                        }
-	                      }
+                                        }
+	                }
               }
         }
         stage('building the frontend image')
@@ -29,8 +29,8 @@ pipeline {
                         // Install Node.js dependencies and build your backend
                         sh 'docker build -t frontendimage17 .'
                         sh 'docker images'
-                       }
-	                    }
+                                       }
+	                }
         
              }
         }
