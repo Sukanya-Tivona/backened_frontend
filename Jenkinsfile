@@ -21,7 +21,7 @@ pipeline {
 	                      }
               }
         }
-        stage('building the frontend images')
+        stage('building the frontend image')
         {
         steps{
         dir('src/client'){
@@ -35,7 +35,7 @@ pipeline {
              }
         }
         
-        stage('Push Images to DockerHub') 
+        stage('Pushing Images to DockerHub') 
         {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_CREDENTIALS', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
@@ -49,7 +49,7 @@ pipeline {
        
         }
      
-        stage('pulling the backendimage from docker hub') 
+        stage('pulling the backendimage and runing the container') 
         {
             steps {
                 sh "docker pull snapa1816/ci_cd:backendimage17"
@@ -62,7 +62,7 @@ pipeline {
         }
     
    
-        stage('pulling the frontndimage from docker hub') 
+        stage('pulling the frontendimage and runing the container') 
         {
             steps {
                 sh "docker pull snapa1816/ci_cd:frontendimage17"
