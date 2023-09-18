@@ -84,12 +84,12 @@ pipeline {
          stage('Deploy to K8s') { 
                 steps{
                    echo "Deployment started ..."
-		   sh 'ls -ltr'
-		   sh 'pwd'
+		  
+
 		   
                    step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true]
-                   sh 'kubectl apply -f backend_deployment.yaml'
-                   sh 'kubectl get pod'
+                    kubectl apply -f backend_deployment.yaml
+                    kubectl get pod
 		   echo "Deployment Finished ..."
             }
 	   }
