@@ -88,7 +88,7 @@ pipeline {
 		   sh 'pwd'
 		   
                    step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true]
-                   sh 'kubectl apply -f deployment-backend.yaml'
+                   sh 'kubectl apply -f backend_deployment.yaml'
                    sh 'kubectl get pod'
 		   echo "Deployment Finished ..."
             }
