@@ -1,5 +1,12 @@
 pipeline {
     agent any
+    environment {
+		
+		PROJECT_ID = 'light-client-389123'
+                CLUSTER_NAME = 'firstcluster'
+                LOCATION = 'us-central1-b'
+                CREDENTIALS_ID = 'gcp_gke_credentials'		
+	}
     
     stages {
         stage('Checkout') 
@@ -13,19 +20,21 @@ pipeline {
         {
         steps {
         dir('src/server'){
-			script {
+			script 
+			{
                         
                         sh 'docker build -t backendimage17 .'
                         sh 'docker images'
                         }
-	                      }
+	                 }
               }
         }
         stage('building the frontend image')
         {
         steps{
         dir('src/client'){
-			script {
+			script 
+		       {
                         
                         sh 'docker build -t frontendimage17 .'
                         sh 'docker images'
@@ -71,7 +80,20 @@ pipeline {
              
                   }
         }
-      
+        
+         stage('Deploy to K8s') { 
+                steps{
+                   echo "Deployment started ..."
+		   sh 'ls -ltr'
+		   sh 'pwd'
+		   
+                   step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true]
+                   sh 'kubectl apply -f deployment-backend.yaml'
+                   sh 'kubectl get pod'
+		   echo "Deployment Finished ..."
+            }
+	   }
+        
     }
 }
 	 
